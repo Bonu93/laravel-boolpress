@@ -31,7 +31,7 @@ Route::get('/',  'HomeController@index')->name('home');
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('guest.home');
 });
 
 Route::get('{any?}', function() {
