@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -28,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -39,7 +40,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->validation_rules(), $this->validation_messages());
+
+        $data = $request->all();
+
+        $new_post = new Post();
+
+        $slug = Str::slug($data['title'], '-');
+        $count = 1;
+        $base_slug = $slug;
+
+        while(Post::where('slug', $slug)->first()) {
+            $slug = $base_slug . '-' . $count;
+        }
+
+        $data['slug'] = $slug;
+
+        $new_post->fill($data);
+
+        $new_post->save();
+
+        return redirect()->route('admin.posts.show', $new_post->slug);
     }
 
     /**
@@ -48,9 +69,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $post = Post::where('slug', $slug)->first();
+
+        if (! $post) {
+            abort(404);
+        }
+
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -90,4 +117,22 @@ class PostController extends Controller
 
         return redirect()->route('admin.posts.index');
     }
+
+    private function validation_rules() {
+        return [
+            'title' => 'required|max:255',
+            'content' => 'required'
+        ];
+    }
+
+    private function validation_messages() {
+        return [
+            'required' => 'The :attribute is required',
+            'max' => 'Max :max characters allowed for the :attribute'
+        ];
+    }
+
+
 }
+
+
