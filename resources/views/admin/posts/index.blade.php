@@ -14,6 +14,8 @@
                         <div class="cta">
                             <a href="{{route('admin.posts.show', $post->Slug)}}" class="btn btn-primary">Show</a>
 
+                            <a href="{{route('admin.posts.edit', $post->id)}}" class="btn btn-success">Edit</a>
+
 
                             <form action="{{route('admin.posts.destroy', $post->id)}}" method="POST">
                                 @csrf
