@@ -108,25 +108,28 @@ class PostController extends Controller
         $request->validate($this->validation_rules(), $this->validation_messages());
 
         $data = $request->all();
-
-        
-
+       
+      
         if ($data['title'] != $post->title) {
             $slug = Str::slug($data['title'], '-');
             $count = 1;
+            $base_slug = $slug;
 
-            while(Post::where('Slug', $slug)->first()) {
-                $slug .= '-' . $count;
+            // run th cicle if found the post with same slug
+            while (Post::where('slug', $slug)->first()) {
+                // gen new slug with counter
+                $slug .= $base_slug . '-' . $count;
                 $count++;
-            }   
-            $data['Slug'] = $slug;
-        } else {
-            $data['Slug'] = $post->Slug;
+            }
+            $data['slug'] = $slug;
+        }
+        else {
+            $data['slug'] = $post->Slug;
         }
 
         $post->update($data);
 
-        return redirect()->route('admin.posts.show', $post->Slug);
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
