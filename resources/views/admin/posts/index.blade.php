@@ -9,6 +9,9 @@
                 <div class="col-3">
                     <div class="card mb-3 text-center p-2">
                         <h3>{{$post->title}}</h3>
+                        @if ($post->category)
+                            <a href="{{route('admin.category', $post->category->id)}}">{{$post->category->name}}</a>
+                        @endif
                         <p>{{$post->content}}</p>
 
                         <div class="cta d-flex justify-content-around">
