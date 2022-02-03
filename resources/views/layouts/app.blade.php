@@ -36,6 +36,12 @@
                         <li class="nav-item">
                             <a href="{{route('admin.posts.index')}}" class="nav-link">Posts</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.posts.create')}}" class="nav-link">New Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/" class="nav-link">Front Office</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

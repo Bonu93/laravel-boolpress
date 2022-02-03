@@ -14,7 +14,7 @@
             @error('content')
                 <div class="text-danger">{{$message}}</div>
             @enderror
-            <button type="submit">Post</button>
+            <button type="submit" class="btn btn-primary">Post</button>
 
 
         </form>
