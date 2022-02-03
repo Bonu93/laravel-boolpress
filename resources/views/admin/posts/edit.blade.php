@@ -19,6 +19,22 @@
                 <div class="text-danger">{{$message}}</div>
             @enderror
 
+            <select class="form-control mb-3" name="category_id" id="category_id">
+
+                <option value="">No category</option>
+
+                @foreach ($categories as $category)
+                    <option value="{{$category->id}}"
+                        @if ($category->id == old('category_id', $post->category_id)) selected @endif
+                        >
+                        {{$category->name}}
+                    </option>
+                @endforeach
+            </select>
+            @error('category_id')
+                <div class="text-danger">{{$message}}</div>
+            @enderror
+
             <button type="submit" class="btn btn-primary">Save Changes</button>
 
 

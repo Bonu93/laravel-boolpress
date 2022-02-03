@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
@@ -29,7 +30,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+
+        $categories = Category::all();
+
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -92,8 +97,9 @@ class PostController extends Controller
             abort(404);
         }
 
+        $categories = Category::all();
 
-        return view('admin.posts.edit', compact('post'));
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -147,17 +153,24 @@ class PostController extends Controller
         return redirect()->route('admin.posts.index');
     }
 
+
+
+
+
+
     private function validation_rules() {
         return [
             'title' => 'required|max:255',
-            'content' => 'required'
+            'content' => 'required',
+            'category_id' => 'nullable|exists:categories,id'
         ];
     }
 
     private function validation_messages() {
         return [
             'required' => 'The :attribute is required',
-            'max' => 'Max :max characters allowed for the :attribute'
+            'max' => 'Max :max characters allowed for the :attribute',
+            'category_id.exists' => 'Selected category does not exists'
         ];
     }
 
