@@ -104,8 +104,9 @@ class PostController extends Controller
         }
 
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -137,6 +138,14 @@ class PostController extends Controller
         }
         else {
             $data['slug'] = $post->Slug;
+        }
+
+
+        
+        if(array_key_exists('tags', $data)) {
+            $post->tags()->sync($data['tags']);
+        } else {
+            $post->tags()->detach();
         }
 
         $post->update($data);
