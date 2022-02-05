@@ -141,7 +141,7 @@ class PostController extends Controller
         }
 
 
-        
+
         if(array_key_exists('tags', $data)) {
             $post->tags()->sync($data['tags']);
         } else {
@@ -164,6 +164,8 @@ class PostController extends Controller
         $post = Post::find($id);
 
         $post->delete();
+
+        $post->tags()->detach();
 
         return redirect()->route('admin.posts.index');
     }
