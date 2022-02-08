@@ -9,7 +9,8 @@
                 >
                     <div class="card text-center p-3 mb-4">
                         <h2>{{post.title}}</h2>
-                        <p>{{post.content}}</p>
+                        <h5>{{formatDate(post.created_at)}}</h5>
+                        <p>{{getExcerpt(post.content, 100)}}</p>
                     </div>
                 
                 </div>
@@ -41,8 +42,23 @@ export default {
             axios.get('http://127.0.0.1:8000/api/posts')
             .then(res => {
                 this.posts = res.data;
-                console.log(this.posts);
+                // console.log(this.posts);
             })
+        },
+
+        getExcerpt(text, maxLength) {
+            if(text > maxLength) {
+                return text.substr(0, maxLength) + ('...');
+            }
+
+            return text;
+        },
+
+        formatDate(postDate) {
+            const date = new Date(postDate);
+
+            const formatted = new Intl.DateTimeFormat('it-IT').format(date);
+            return formatted;
         }
     }
 

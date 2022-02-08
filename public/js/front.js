@@ -1932,6 +1932,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
@@ -1949,9 +1950,20 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts').then(function (res) {
-        _this.posts = res.data;
-        console.log(_this.posts);
+        _this.posts = res.data; // console.log(this.posts);
       });
+    },
+    getExcerpt: function getExcerpt(text, maxLength) {
+      if (text > maxLength) {
+        return text.substr(0, maxLength) + '...';
+      }
+
+      return text;
+    },
+    formatDate: function formatDate(postDate) {
+      var date = new Date(postDate);
+      var formatted = new Intl.DateTimeFormat('it-IT').format(date);
+      return formatted;
     }
   }
 });
@@ -2453,7 +2465,9 @@ var render = function () {
             _c("div", { staticClass: "card text-center p-3 mb-4" }, [
               _c("h2", [_vm._v(_vm._s(post.title))]),
               _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(post.content))]),
+              _c("h5", [_vm._v(_vm._s(_vm.formatDate(post.created_at)))]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(_vm.getExcerpt(post.content, 100)))]),
             ]),
           ])
         }),
