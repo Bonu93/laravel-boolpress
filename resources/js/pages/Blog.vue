@@ -11,6 +11,10 @@
                         <h2>{{post.title}}</h2>
                         <h5>{{formatDate(post.created_at)}}</h5>
                         <p>{{getExcerpt(post.content, 100)}}</p>
+
+                        <router-link :to="{name: 'post-detail', params: {slug: post.Slug}}">
+                            Read more
+                        </router-link>
                     </div>
                 
                 </div>

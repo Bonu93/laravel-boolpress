@@ -19,6 +19,7 @@
                         Blog
                     </router-link>
                 </li>
+                
             </ul>
           </div>
       </nav>

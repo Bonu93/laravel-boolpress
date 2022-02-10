@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 //PAGES
 import Blog from './pages/Blog';
 import Home from './pages/Home';
+import PostDetail from './pages/PostDetail';
 
 Vue.use(VueRouter);
 
@@ -21,7 +22,12 @@ const router = new VueRouter({
             path: '/',
             name: 'home', 
             component: Home
-        }
+        },
+        {
+            path: '/blog/:slug',
+            name: 'post-detail', 
+            component: PostDetail
+        },
     
     
     

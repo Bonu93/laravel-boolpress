@@ -13,10 +13,15 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $posts = Post::paginate(6);
         return  response()->json($posts);
+    }
+
+    public function show($slug) {
+        $post = Post::where('Slug', $slug)->with(['category', 'tags'])->first();
+
+        return response()->json($post);
     }
 
 }
