@@ -1933,13 +1933,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
   components: {},
   data: function data() {
     return {
-      posts: null
+      posts: null,
+      pagination: null
     };
   },
   created: function created() {
@@ -1949,8 +1980,13 @@ __webpack_require__.r(__webpack_exports__);
     getPosts: function getPosts() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts').then(function (res) {
-        _this.posts = res.data; // console.log(this.posts);
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("http://127.0.0.1:8000/api/posts?page=".concat(page)).then(function (res) {
+        _this.posts = res.data.data;
+        _this.pagination = {
+          current: res.data.current_page,
+          last: res.data.last_page
+        };
       });
     },
     getExcerpt: function getExcerpt(text, maxLength) {
@@ -2455,7 +2491,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "container" }, [
-      _c("h1", [_vm._v("Boolpress Blog")]),
+      _c("h1", { staticClass: "mb-5" }, [_vm._v("Boolpress Blog")]),
       _vm._v(" "),
       _c(
         "div",
@@ -2472,6 +2508,63 @@ var render = function () {
           ])
         }),
         0
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "pagination d-flex justify-content-center" },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { disabled: _vm.pagination.current === 1 },
+              on: {
+                click: function ($event) {
+                  return _vm.getPosts(_vm.pagination.current - 1)
+                },
+              },
+            },
+            [_vm._v("\n                Prev\n            ")]
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.pagination.last, function (n) {
+            return _c(
+              "button",
+              {
+                key: "page-" + n,
+                staticClass: "mx-2 btn",
+                class:
+                  _vm.pagination.current === n
+                    ? "btn-primary"
+                    : "btn-secondary",
+                on: {
+                  click: function ($event) {
+                    return _vm.getPosts(n)
+                  },
+                },
+              },
+              [_vm._v("\n                " + _vm._s(n) + "\n            ")]
+            )
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: {
+                disabled: _vm.pagination.current === _vm.pagination.last,
+              },
+              on: {
+                click: function ($event) {
+                  return _vm.getPosts(_vm.pagination.current + 1)
+                },
+              },
+            },
+            [_vm._v("\n                Next\n            ")]
+          ),
+        ],
+        2
       ),
     ]),
   ])

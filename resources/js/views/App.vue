@@ -2,7 +2,7 @@
     <div>
         
         <div class="container">
-            <h1>Boolpress Blog</h1>
+            <h1 class="mb-5">Boolpress Blog</h1>
             <div class="row">
                 <div class="col-4"
                 v-for="post in posts" :key="`post-${post.id}`"
@@ -15,7 +15,37 @@
                 
                 </div>
             </div>
+
+            <div class="pagination d-flex justify-content-center">
+                <button 
+                class="btn btn-primary"
+                @click="getPosts(pagination.current - 1)"
+                :disabled="pagination.current === 1"
+                >
+                    Prev
+                </button>
+
+                <button
+                    class="mx-2 btn"
+                    :class="pagination.current === n ? 'btn-primary' : 'btn-secondary'"
+                    v-for="n in pagination.last" :key="`page-${n}`"
+                    @click="getPosts(n)"
+                >
+                    {{ n }}
+                </button>
+
+
+                <button 
+                    class="btn btn-primary"
+                    @click="getPosts(pagination.current + 1)"
+                    :disabled="pagination.current === pagination.last"
+                >
+                    Next
+                </button>
+
+            </div>
         </div>
+        
         
         
     </div>
@@ -32,17 +62,21 @@ export default {
     data() {
         return {
             posts: null,
+            pagination: null,
         }
     },
     created() {
         this.getPosts();
     },
     methods: {
-        getPosts() {
-            axios.get('http://127.0.0.1:8000/api/posts')
+        getPosts(page = 1) {
+            axios.get(`http://127.0.0.1:8000/api/posts?page=${page}`)
             .then(res => {
-                this.posts = res.data;
-                // console.log(this.posts);
+                this.posts = res.data.data;
+                this.pagination = {
+                    current: res.data.current_page,
+                    last: res.data.last_page
+                }
             })
         },
 
