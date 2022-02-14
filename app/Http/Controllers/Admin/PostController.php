@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Tag;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -51,6 +52,12 @@ class PostController extends Controller
 
         $data = $request->all();
 
+        //POST IMAGE
+        if(array_key_exists('image', $data)) {
+            $img_path = Storage::put('posts-images', $data['image']);
+            $data['image'] = $img_path;
+        }
+
         $new_post = new Post();
 
         $slug = Str::slug($data['title'], '-');
@@ -62,6 +69,8 @@ class PostController extends Controller
         }
 
         $data['slug'] = $slug;
+
+        
 
         $new_post->fill($data);
 
@@ -180,7 +189,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|exists:tags,id'
+            'tags' => 'nullable|exists:tags,id',
+            'image' => 'nullable|file|mimes:jpeg,jpg,bmp,png'
         ];
     }
 

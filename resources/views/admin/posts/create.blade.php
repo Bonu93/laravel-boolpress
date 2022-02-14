@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{route('admin.posts.store')}}" method="POST">
+        <form action="{{route('admin.posts.store')}}" method="POST" enctype="multipart/form-data">
 
             {{-- Post data --}}
 
@@ -13,17 +13,23 @@
                 <div class="text-danger">{{$message}}</div>
             @enderror
             <label for="content">Content</label>
-            <input type="text" id="content" name="content" class="form-control mb-3">
+            <textarea name="content" id="content" cols="30" rows="10" name="content" class="form-control mb-3"></textarea>
             @error('content')
                 <div class="text-danger">{{$message}}</div>
             @enderror
 
-            <label for="category_id">Category</label>
+            
+
+            {{-- Image --}}
+
+            <label for="image">Carica immagine</label>
+            <input type="file" id="image" name="image" class="form-control mb-3">
 
 
 
             {{-- Categories --}}
 
+            <label for="category_id">Category</label>
             <select class="form-control mb-3" name="category_id" id="category_id">
 
                 <option value="">No category</option>

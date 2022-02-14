@@ -7,6 +7,11 @@
             
         @endif</h5>
 
+        @if ($post->image) 
+        <img src="{{asset('storage/' . $post->image)}}" alt="{{$post->title}}" class="img-fluid">
+            
+        @endif
+
         <div class="tags">
             @if (!$post->tags->isEmpty())
                 @foreach ($post->tags as $tag)
