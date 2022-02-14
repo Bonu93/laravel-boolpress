@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <form action="{{route('admin.posts.update', $post->id)}}" method="POST">
+        <form action="{{route('admin.posts.update', $post->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <label for="title">Title</label>
@@ -18,6 +18,15 @@
             @error('content')
                 <div class="text-danger">{{$message}}</div>
             @enderror
+
+            
+            <label for="image">Carica immagine</label>
+            <input type="file" id="image" name="image" class="form-control mb-3">
+            @error('image')
+            <div class="text-danger">{{$message}}</div>
+            @enderror
+                
+            
 
             <select class="form-control mb-3" name="category_id" id="category_id">
 

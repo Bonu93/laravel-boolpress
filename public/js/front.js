@@ -2109,6 +2109,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostDetail',
@@ -2888,6 +2892,14 @@ var render = function () {
           _vm._v(" "),
           _vm.post.category
             ? _c("h5", [_vm._v("Category: " + _vm._s(_vm.post.category.name))])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.post.image
+            ? _c("figure", [
+                _c("img", {
+                  attrs: { src: _vm.post.image, alt: _vm.post.title },
+                }),
+              ])
             : _vm._e(),
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(_vm.post.content))]),

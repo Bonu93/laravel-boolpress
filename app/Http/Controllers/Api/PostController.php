@@ -20,6 +20,11 @@ class PostController extends Controller
 
     public function show($slug) {
         $post = Post::where('Slug', $slug)->with(['category', 'tags'])->first();
+        if(!$post) {
+            abort(404);
+        } elseif ($post->image) {
+            $post->image = url('storage/' . $post->image);
+        }
 
         return response()->json($post);
     }

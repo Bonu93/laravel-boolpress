@@ -130,6 +130,14 @@ class PostController extends Controller
         $request->validate($this->validation_rules(), $this->validation_messages());
 
         $data = $request->all();
+
+        if(array_key_exists('image', $data)) {
+            if ($post->image) {
+                Storage::delete($post->image);
+            } 
+
+            $data['image'] = Storage::put('posts-images', $data['image']);
+        }
        
       
         if ($data['title'] != $post->title) {
@@ -171,6 +179,10 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+
+        if($post->image) {
+            Storage::delete($post->image);
+        }
 
         $post->delete();
 

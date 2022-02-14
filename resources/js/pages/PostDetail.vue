@@ -13,6 +13,10 @@
         </div>
         <h5 v-if="post.category">Category: {{post.category.name}}</h5>
 
+        <figure v-if="post.image">
+            <img :src="post.image" :alt="post.title">
+        </figure>
+
         <p>{{post.content}}</p>
 
       </div>

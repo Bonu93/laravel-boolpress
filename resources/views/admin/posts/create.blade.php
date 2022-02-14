@@ -24,6 +24,9 @@
 
             <label for="image">Carica immagine</label>
             <input type="file" id="image" name="image" class="form-control mb-3">
+            @error('image')
+            <div class="text-danger">{{$message}}</div>
+            @enderror
 
 
 
